@@ -44,7 +44,7 @@ namespace BankDesk
             //         new BalanceReport(
             //             container
             //                 .GetService<ITransactionEventStore>());
-            throw new Exception("Clean this up!!");
+            throw new Exception("Clean this up!! > Startup.cs line 47");
             /*
              * We need to ensure the ports of our hexagon have implementations provided...
              * the above line above this exception achieves this but the following line is
@@ -62,7 +62,7 @@ namespace BankDesk
             //             container
             //                 .GetService<ITransactionEventStore>());
             //
-            throw new Exception("Clean this up!!");
+            throw new Exception("Clean this up!! > Startup.cs line 65");
             /*
              * We need to ensure the ports of our hexagon have implementations provided...
              * the above line above this exception achieves this but the following line is
