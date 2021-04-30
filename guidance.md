@@ -48,14 +48,17 @@ Other:
  
  #### Sanity check you work
  
- When you think you are done you should be able to run the app:
+When done the Runner should output a value of £53 for the balance.
+ 
+You should be able to run the app if it is truly done:
  
  `dotnet run --project BankDesk`
  
-BEFORE you run this though, the Runner should output a value of £53 for the balance.
- 
  #### Manual Experimentation
  The controller actions should be obvious, but using these in sequence should give a balance of £77:
+ 
  http://localhost:5000/bank/deposit/358cc7ca-31ea-4ff7-abc6-c1acd1138d6f/200
+ 
  http://localhost:5000/bank/withdraw/358cc7ca-31ea-4ff7-abc6-c1acd1138d6f/123
+ 
  http://localhost:5000/bank/358cc7ca-31ea-4ff7-abc6-c1acd1138d6f
