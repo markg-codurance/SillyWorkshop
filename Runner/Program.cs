@@ -17,14 +17,15 @@ namespace Runner
             try
             {
                 var hostBuilder = Bank.API.Program.CreateHostBuilder(args);
-                // override dependencies on the hostBuilder>
+                // override dependencies on the hostBuilder
                 // hostBuilder.ConfigureServices(another service collection)
                 var host = hostBuilder.Build();
 
                 var eventStore = host.Services.GetService<ITransactionEventStore>();
                 var ctrl = ActivatorUtilities.CreateInstance<BankController>(host.Services);
 
-                Console.WriteLine("All setup for the ports done! Continue to wire up controller functionality...");
+                Console.WriteLine("All setup for the ports done! Continue to implement controller functionality...");
+                
                 Guid accountId = Guid.NewGuid();
                 var viewBalance = await ctrl.ViewBalance(accountId);
                 var accountStatement = await ctrl.AccountStatement(accountId);

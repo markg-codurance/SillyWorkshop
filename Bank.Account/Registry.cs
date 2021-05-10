@@ -1,4 +1,5 @@
-﻿using Bank.Account.UseCases.Deposit;
+﻿using System;
+using Bank.Account.UseCases.Deposit;
 using Bank.Account.UseCases.GetBalance;
 using Bank.Account.UseCases.GetStatement;
 using Bank.Account.UseCases.Withdraw;
@@ -11,8 +12,8 @@ namespace Bank.Account
     {
         public static void RegisterBankAccountUseCases(this IServiceCollection services)
         {
-            services.AddScoped<ICommandHandler<DepositCommand>, DepositCommandHandler>();
-            services.AddScoped<ICommandHandler<WithdrawCommand>, WithdrawCommandHandler>();
+            // TODO: register the command handlers
+            // register the queries
             services.AddScoped<IQueryHandler<GetBalanceQuery, decimal>, GetBalanceQueryHandler>();
             services.AddScoped<IQueryHandler<GetStatementQuery, Statement>, GetStatementQueryHandler>();
         }
