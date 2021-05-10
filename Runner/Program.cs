@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BankAccountReader;
-using BankCommandProcessor;
-using BankDesk;
-using BankDesk.Controllers;
-using BankDomain;
-using BankStore;
+using Bank.API.Controllers;
+using Bank.EventStore;
+using Bank.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Runner
@@ -19,18 +16,15 @@ namespace Runner
         {
             try
             {
-                var webapi = new Startup();
-                webapi.ConfigureServices(new ServiceCollection());
+                var hostBuilder = Bank.API.Program.CreateHostBuilder(args);
+                // override dependencies on the hostBuilder>
+                // hostBuilder.ConfigureServices(another service collection)
+                var host = hostBuilder.Build();
+
+                var eventStore = host.Services.GetService<ITransactionEventStore>();
+                var ctrl = ActivatorUtilities.CreateInstance<BankController>(host.Services);
 
                 Console.WriteLine("All setup for the ports done! Continue to wire up controller functionality...");
-
-                var eventStore = new BankTransactionEventStore();
-                var ctrl = new BankController(
-                    new Logger<BankController>(new ConsoleLoggerFactory()),
-                    new CommandHandler(eventStore),
-                    new BalanceReport(eventStore), 
-                    new DummyStatementReport(eventStore));
-
                 Guid accountId = Guid.NewGuid();
                 var viewBalance = await ctrl.ViewBalance(accountId);
                 var accountStatement = await ctrl.AccountStatement(accountId);
@@ -52,27 +46,6 @@ namespace Runner
             {
                 Console.WriteLine(e.Message);
             }
-        }
-    }
-
-    internal class DummyStatementReport : IReadStatement
-    {
-        StatementReport report;
-
-        public DummyStatementReport(BankTransactionEventStore eventStore)
-        {
-            /*
-             * For now you could remove the exception and come back to this later
-             * although it may not allow you much progress at some point depending
-             * on how you tackle the problems }:-}
-             */
-            throw new Exception("Read me! :-D");
-            report = new StatementReport(eventStore);
-        }
-
-        public Task<IEnumerable<TransactionEvent>> GetStatement(Guid accountId)
-        {
-            return report.GetStatement(accountId);
         }
     }
 

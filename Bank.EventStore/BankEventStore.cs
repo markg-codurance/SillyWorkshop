@@ -3,13 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BankDomain;
+using Bank.Infrastructure;
 
-namespace BankStore
+namespace Bank.EventStore
 {
     public class BankTransactionEventStore : ITransactionEventStore
     {
-        private readonly ConcurrentDictionary<Guid, List<TransactionEvent>> events = new ConcurrentDictionary<Guid, List<TransactionEvent>>();
+        private readonly ConcurrentDictionary<Guid, List<DomainEvent>> events = new ConcurrentDictionary<Guid, List<DomainEvent>>();
 
         public BankTransactionEventStore()
         {
@@ -28,7 +28,7 @@ namespace BankStore
             throw new Exception("Read here, some relatively informative informational info detected...");
         }
         
-        public async Task Append(int expectedVersion, TransactionEvent transactionEvent)
+        public async Task Append(int expectedVersion, DomainEvent transactionEvent)
         {
             var evts = (await ReadAll(transactionEvent.AccountId)).ToArray();
             var version = evts.Length;
@@ -58,7 +58,7 @@ namespace BankStore
             // as it is not part of the current demonstration.
             if (!events.ContainsKey(transactionEvent.AccountId))
             {
-                events.TryAdd(transactionEvent.AccountId, new List<TransactionEvent>());
+                events.TryAdd(transactionEvent.AccountId, new List<DomainEvent>());
             }
 
             /*
@@ -78,7 +78,7 @@ namespace BankStore
 
         }
 
-        public Task<IEnumerable<TransactionEvent>> ReadAll(Guid accountId)
+        public Task<IEnumerable<DomainEvent>> ReadAll(Guid accountId)
         {
             /*
              * Here the event store needs to return all the events for a particular

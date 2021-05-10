@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Bank.Account\Bank.Account.csproj" />
+      <ProjectReference Include="..\Bank.EventStore\Bank.EventStore.csproj" />
+      <ProjectReference Include="..\Bank.Infrastructure\Bank.Infrastructure.csproj" />
+    </ItemGroup>
+
+
+</Project>
