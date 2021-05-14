@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Bank.Account
 {
-    public static class UseCaseRegistry
+    public static class Registry
     {
         public static void RegisterBankAccountUseCases(this IServiceCollection services)
         {
