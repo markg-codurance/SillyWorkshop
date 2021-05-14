@@ -25,7 +25,7 @@ namespace Bank.EventStore
              *
              * You can delete this comment and the constructor now I have pointed it out.
              */
-            //throw new Exception("Read here, some relatively informative informational info detected...");
+            throw new Exception("Read here, some relatively informative informational info detected...");
         }
         
         public async Task Append(int expectedVersion, DomainEvent transactionEvent)
